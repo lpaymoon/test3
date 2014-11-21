@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- For assistance related to logback-translator or configuration  -->
+<!-- files in general, please contact the logback user mailing list -->
+<!-- at http://www.qos.ch/mailman/listinfo/logback-user             -->
+<!--                                                                -->
+<!-- For professional support please see                            -->
+<!--    http://www.qos.ch/shop/products/professionalSupport         -->
+<!--                                                                -->
+<configuration scan="true" scanPeriod="60 seconds">
+  <appender name="c3p0" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender-->
+    <!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy-->
+    <!--for further documentation-->
+    <File>./log/c3p0.log</File>
+    <encoder>
+      <pattern>%d{yyyyMMddHHmmssSSS} %m%n</pattern>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>ALL</level>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>./log/c3p0.log.%d{yyyyMMddHH}</fileNamePattern>
+    </rollingPolicy>
+  </appender>
+  <appender name="MpspAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender-->
+    <!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy-->
+    <!--for further documentation-->
+    <File>./log/mpsp.log</File>
+    <encoder>
+      <pattern>%d{yyyyMMddHHmmss},%m%n</pattern>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>INFO</level>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>./log/mpsp.log.%d{yyyyMMddHH}</fileNamePattern>
+    </rollingPolicy>
+  </appender>
+  <appender name="A4" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender-->
+    <!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy-->
+    <!--for further documentation-->
+    <File>./log/log4j_daily.log</File>
+    <encoder>
+      <pattern>%d{yyyyMMddHHmmss} [%-9t] %-5p  %c{0} - %m%n</pattern>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>DEBUG</level>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>./log/log4j_daily.log.%d{yyyyMMddHH}</fileNamePattern>
+    </rollingPolicy>
+  </appender>
+  <logger name="com.mchange" level="WARN">
+    <appender-ref ref="c3p0"/>
+  </logger>
+  <logger name="MPSP" level="INFO">
+    <appender-ref ref="MpspAppender"/>
+  </logger>
+  <root level="INFO">
+    <appender-ref ref="A4"/>
+  </root>
+</configuration>
